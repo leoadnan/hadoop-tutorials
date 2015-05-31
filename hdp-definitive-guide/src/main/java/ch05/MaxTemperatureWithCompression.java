@@ -7,8 +7,8 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop.io.compress.DefaultCodec;
 import org.apache.hadoop.io.compress.GzipCodec;
-import org.apache.hadoop.io.compress.SnappyCodec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -22,7 +22,7 @@ public class MaxTemperatureWithCompression {
 		Configuration conf = new Configuration();
 		conf.set("fs.defaultFS", "hdfs://master:9000/");
 		conf.setBoolean(Job.MAP_OUTPUT_COMPRESS, true);
-		conf.setClass(Job.MAP_OUTPUT_COMPRESS_CODEC, SnappyCodec.class, CompressionCodec.class);
+		conf.setClass(Job.MAP_OUTPUT_COMPRESS_CODEC, DefaultCodec.class, CompressionCodec.class);
 		
 		Job job = Job.getInstance(conf, "Max Temperature with compression");
 	    job.setJarByClass(MaxTemperatureWithCompression.class);

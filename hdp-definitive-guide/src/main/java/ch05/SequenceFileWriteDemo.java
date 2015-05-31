@@ -10,6 +10,12 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop.io.compress.CompressionCodecFactory;
+import org.apache.hadoop.io.compress.DefaultCodec;
+import org.apache.hadoop.io.compress.GzipCodec;
+import org.apache.hadoop.io.compress.SnappyCodec;
+import org.iq80.leveldb.CompressionType;
 
 public class SequenceFileWriteDemo {
 
@@ -29,7 +35,6 @@ public class SequenceFileWriteDemo {
 		IntWritable key = new IntWritable();
 		Text value = new Text();
 		SequenceFile.Writer writer = null;
-		
 		try {
 			FileSystem fs = FileSystem.get(URI.create(output), conf);
 			Path p = new Path(output);
@@ -37,8 +42,13 @@ public class SequenceFileWriteDemo {
 			if(fs.exists(p)){
 				fs.delete(p, true);
 			}
-			writer= SequenceFile.createWriter(fs, conf, p, key.getClass(), value.getClass());
+//			SequenceFile.CompressionType compressionType=SequenceFile.CompressionType.BLOCK;
+//			CompressionCodecFactory ccf = new CompressionCodecFactory(conf);
+//			CompressionCodec codec = ccf.getCodecByClassName(DefaultCodec.class.getName());
+//			SequenceFile.setDefaultCompressionType(conf, SequenceFile.CompressionType.BLOCK);		
+//			writer= SequenceFile.createWriter(fs, conf, p, key.getClass(), value.getClass(), compressionType, codec);
 			
+			writer= SequenceFile.createWriter(fs, conf, p, key.getClass(), value.getClass());
 			for (int i=0; i<100; i++){
 				key.set(100-i);
 				value.set(DATA[i % DATA.length]);
