@@ -6,15 +6,18 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
-public class MaxTemperatureMapper extends
-		Mapper<LongWritable, Text, Text, IntWritable> {
+public class MaxTemperatureMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
 	private static final int MISSING = 9999;
 
 	@Override
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
+		
+		FileSplit fs = (FileSplit)context.getInputSplit();
+		
+		
 		String line = value.toString();
 		String year = line.substring(15, 19);
 		int airTemperature;

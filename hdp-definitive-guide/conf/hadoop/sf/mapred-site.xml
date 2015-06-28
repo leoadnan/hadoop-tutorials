@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+<configuration>
+	<property>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
+	</property>
+
+    <property>
+      <name>mapreduce.task.io.sort.factor</name>
+      <value>100</value>
+    </property>
+    <property>
+      <name>mapreduce.task.io.sort.mb</name>
+      <value>1024</value>
+    </property>
+	<property>
+		<name>mapred.child.java.opts</name>
+		<value>-Xmx10240m</value>
+	</property>
+	
+	<property>
+		<name>mapreduce.map.memory.mb</name>
+		<value>2048</value>
+	</property>
+	<property>
+		<name>mapreduce.map.java.opts</name>
+		<value>-Xmx2048M</value>
+	</property>
+	<property>
+		<name>mapreduce.map.cpu.vcores</name>
+		<value>2</value>
+	</property>
+	<property>
+        <name>mapreduce.tasktracker.map.tasks.maximum</name>
+        <value>3</value>
+    </property>
+	<property>
+        <name>mapreduce.map.combine.minspills</name>
+        <value>3</value>
+    </property>
+
+	<property>
+		<name>mapreduce.reduce.memory.mb</name>
+		<value>3072</value>
+	</property>
+	<property>
+		<name>mapreduce.reduce.java.opts</name>
+		<value>-Xmx3072M</value>
+	</property>
+	<property>
+		<name>mapreduce.reduce.cpu.vcores</name>
+		<value>2</value>
+	</property>
+    <property>
+        <name>mapreduce.tasktracker.reduce.tasks.maximum</name>
+        <value>3</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.merge.inmem.threshold</name>
+        <value>0</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.input.buffer.percent</name>
+        <value>0.7</value>
+    </property>
+   
+   <property>
+      <name>mapreduce.map.output.compress</name>
+      <value>true</value>
+   </property>	
+   <property>
+      <name>mapreduce.map.output.compress.codec</name>
+      <value>org.apache.hadoop.io.compress.DefaultCodec</value>
+   </property>
+   <property>
+   	  <name>mapreduce.output.fileoutputformat.compress.type</name>
+   	  <value>BLOCK</value>
+   </property>
+       
+    <property>
+      <name>mapreduce.jobhistory.address</name>
+      <value>hdp-dev-rm:10020</value>
+    </property>
+    <property>
+      <name>mapreduce.jobhistory.bind-host</name>
+      <value>0.0.0.0</value>
+    </property>
+    <property>
+      <name>mapreduce.jobhistory.done-dir</name>
+      <value>/user/hadoop/done</value>
+    </property>    
+    <property>
+      <name>mapreduce.jobhistory.intermediate-done-dir</name>
+      <value>/user/hadoop/tmp</value>
+    </property>
+    <property>
+      <name>mapreduce.jobhistory.webapp.address</name>
+      <value>hdp-dev-rm:19888</value>
+    </property>
+    <property>
+      <name>mapreduce.jobhistory.bind-host</name>
+      <value>0.0.0.0</value>
+    </property>
+
+    <!-- Job history server persistent state -->
+    <property>
+      <name>mapreduce.jobhistory.recovery.enable</name>
+      <value>true</value>
+    </property>
+    <property>
+      <name>mapreduce.jobhistory.recovery.store.class</name>
+      <value>org.apache.hadoop.mapreduce.v2.hs.HistoryServerFileSystemStateStoreService</value>
+    </property>
+    <property>
+      <name>mapreduce.jobhistory.recovery.store.fs.uri</name>
+      <value>file://${hadoop.tmp.dir}/mapred-jobhistory-state</value>
+    </property>   
+  
+    <!-- Speculative execution would violate various assumptions we've made in our system design -->
+    <property>
+      <name>mapreduce.map.speculative</name>
+      <value>false</value>
+    </property>
+    <property>
+      <name>mapreduce.reduce.speculative</name>
+      <value>false</value>
+    </property>
+
+</configuration>

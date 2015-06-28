@@ -15,10 +15,11 @@ public class MaxTemperature {
       System.exit(-1);
     }
     
-	Configuration conf = new Configuration();
-	conf.set("fs.defaultFS", "hdfs://master:9000/");
+//	Configuration conf = new Configuration();
+//	conf.set("fs.defaultFS", "hdfs://master:9000/");
 
-	Job job = Job.getInstance(conf, "Max Temperature");
+//	Job job = Job.getInstance(conf, "Max Temperature");
+	Job job = Job.getInstance();
     job.setJarByClass(MaxTemperature.class);
 
     FileInputFormat.addInputPath(job, new Path(args[0]));
