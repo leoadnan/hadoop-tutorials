@@ -142,4 +142,8 @@
       <value>false</value>
     </property>
 
+    <property>
+      <name>mapreduce.job.reduce.slowstart.completedmaps</name>
+      <value>0.80</value>
+    </property>
 </configuration>

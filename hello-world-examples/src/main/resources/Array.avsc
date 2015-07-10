@@ -1,0 +1,6 @@
+{
+  "namespace": "example.avro.datatype.test",
+  "name": "Array",	
+  "type": "array",
+  "items": "long"
+}

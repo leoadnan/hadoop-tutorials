@@ -18,42 +18,45 @@
             <artifactId>avro-mapred</artifactId>
             <version>1.7.7</version>
         </dependency>
-         <dependency>
+        
+         <!-- <dependency>
             <groupId>org.apache.pig</groupId>
             <artifactId>pig</artifactId>
             <version>0.13.0</version>
-        </dependency>
+        </dependency> -->
     </dependencies>
-    
-    <!--    
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro-maven-plugin</artifactId>
-                <version>1.7.6</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>schema</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
-                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+				<version>1.7.7</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>schema</goal>
+						</goals>
+						<configuration>
+							<includes>
+								<include>*.avsc</include>
+							</includes>
+							<sourceDirectory>src/main/resources</sourceDirectory>
+							<!-- <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory> -->
+							<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+							<!-- <outputDirectory>${project.build.directory}/generated-sources/java </outputDirectory> -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

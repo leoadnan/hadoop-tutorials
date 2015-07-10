@@ -1,0 +1,7 @@
+{
+  "namespace": "example.avro.datatype.test",
+  "name": "Enum",	
+  "type": "enum",
+  "doc": "An eating utensil.",
+  "symbols": ["KNIFE", "FORK", "SPOON"]
+}

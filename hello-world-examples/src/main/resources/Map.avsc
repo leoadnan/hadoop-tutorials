@@ -1,0 +1,6 @@
+{
+  "namespace": "example.avro.datatype.test",
+  "name": "Map",	
+  "type": "map",
+  "values": "string"
+}
