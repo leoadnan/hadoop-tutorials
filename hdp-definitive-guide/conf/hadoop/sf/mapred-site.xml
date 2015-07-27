@@ -23,28 +23,32 @@
 
     <property>
       <name>mapreduce.task.io.sort.factor</name>
-      <value>100</value>
+      <value>10</value>
     </property>
     <property>
       <name>mapreduce.task.io.sort.mb</name>
-      <value>1024</value>
+      <value>500</value>
     </property>
+    <property>
+      <name>mapreduce.map.sort.spill.percent</name>
+      <value>0.90</value>
+    </property>    
 	<property>
 		<name>mapred.child.java.opts</name>
-		<value>-Xmx10240m</value>
+		<value>-Xmx3500m</value>
 	</property>
 	
 	<property>
 		<name>mapreduce.map.memory.mb</name>
-		<value>2048</value>
+		<value>1024</value>
 	</property>
 	<property>
 		<name>mapreduce.map.java.opts</name>
-		<value>-Xmx2048M</value>
+		<value>-Xmx1024M</value>
 	</property>
 	<property>
 		<name>mapreduce.map.cpu.vcores</name>
-		<value>2</value>
+		<value>3</value>
 	</property>
 	<property>
         <name>mapreduce.tasktracker.map.tasks.maximum</name>
@@ -57,15 +61,15 @@
 
 	<property>
 		<name>mapreduce.reduce.memory.mb</name>
-		<value>3072</value>
+		<value>2048</value>
 	</property>
 	<property>
 		<name>mapreduce.reduce.java.opts</name>
-		<value>-Xmx3072M</value>
+		<value>-Xmx2048M</value>
 	</property>
 	<property>
 		<name>mapreduce.reduce.cpu.vcores</name>
-		<value>2</value>
+		<value>3</value>
 	</property>
     <property>
         <name>mapreduce.tasktracker.reduce.tasks.maximum</name>
