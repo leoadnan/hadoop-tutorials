@@ -1,0 +1,5 @@
+/target/
+/.classpath
+/.project
+/learning-hbase-1.0-SNAPSHOT.jar
+/.settings/

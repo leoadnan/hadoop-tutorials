@@ -2,3 +2,7 @@
 /.settings/
 /.classpath
 /.project
+/.demo.txt.crc
+/.DS_Store
+/hdp-definitive-guide-1.0-SNAPSHOT.jar
+/hdp-examples.jar
