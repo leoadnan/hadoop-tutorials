@@ -83,5 +83,6 @@
         <module>hdp-definitive-guide</module>
         <module>hdp-mr-cookbook-v2</module>
         <module>learning-hbase</module>
+        <module>hbase-definitive-guide</module>
     </modules>
 </project>

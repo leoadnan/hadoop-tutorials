@@ -14,6 +14,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 public class ScanExample {
 	public static void main(String[] args) throws IOException {
+
 		// Get instance of Default Configuration
 		Configuration conf = HBaseConfiguration.create();
 		Connection connection = ConnectionFactory.createConnection(conf);
