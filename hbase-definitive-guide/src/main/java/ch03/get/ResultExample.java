@@ -35,11 +35,11 @@ public class ResultExample {
 		Result result1 = table.get(get);
 		System.out.println(result1);
 
-		Result result2 = Result.EMPTY_RESULT;
-		System.out.println(result2);
+//		Result result2 = Result.EMPTY_RESULT;
+//		System.out.println(result2);
 
-		result2.copyFrom(result1);
-		System.out.println(result2);
+//		result2.copyFrom(result1);
+//		System.out.println(result2);
 
 		table.close();
 		connection.close();
