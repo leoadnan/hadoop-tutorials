@@ -84,5 +84,6 @@
         <module>hdp-mr-cookbook-v2</module>
         <module>learning-hbase</module>
         <module>hbase-definitive-guide</module>
+        <module>hive-cassandra</module>
     </modules>
 </project>
