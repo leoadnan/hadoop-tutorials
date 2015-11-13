@@ -26,7 +26,7 @@
     <value>hdfs://master:9000/hbase</value>
   </property>
   <property>
-    <name>hbase.cluster.distributed</name>
-    <value>true</value>
+    <name>dfs.replication</name>
+    <value>1</value> 
   </property>
 </configuration>

@@ -6,7 +6,7 @@ import org.apache.hadoop.hbase.CellScanner;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class CellScannerExample {
+public class Ex2_CellScannerExample {
 
 	public static void main(String[] args) throws Exception {
 		Put put = new Put(Bytes.toBytes("testrow"));

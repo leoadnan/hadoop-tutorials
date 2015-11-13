@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class FingerprintExample {
+public class Ex1_FingerprintExample {
 
 	public static void main(String[] args) throws Exception {
 		Put put = new Put(Bytes.toBytes("testrow"));

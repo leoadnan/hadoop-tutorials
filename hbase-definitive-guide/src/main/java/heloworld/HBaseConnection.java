@@ -14,7 +14,6 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
@@ -34,9 +33,14 @@ public class HBaseConnection {
 		
 		//Create column family
 		if (admin.tableExists(tableDesc.getTableName())) {
-//			admin.disableTable(table.getTableName());
-//			admin.deleteTable(table.getTableName());
+			admin.disableTable(tableDesc.getTableName());
+			admin.deleteTable(tableDesc.getTableName());
 			System.out.println("table already exists!");
+			tableDesc.addFamily(new HColumnDescriptor("customers"));
+			tableDesc.addFamily(new HColumnDescriptor("orders"));
+			admin.createTable(tableDesc);
+			System.out.println("Customers table created");
+
 		}
 		else {
 			tableDesc.addFamily(new HColumnDescriptor("customers"));
@@ -64,14 +68,17 @@ public class HBaseConnection {
 		salesTable.put(put);
 
 		List<Put> puts = new ArrayList<Put>();
-		for (int i=2; i<=100; i++){
-			Put p = new Put(Bytes.toBytes("row-"+i));
-			p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("customerId"),Bytes.toBytes(String.valueOf(i)));
-			p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("name"),Bytes.toBytes("aahmed-"+i));
-			p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("email"),Bytes.toBytes("leo_adnan@hotmail.com-"+i));
-			p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("phone"),Bytes.toBytes("1234567890--"+i));
-			p.addColumn(Bytes.toBytes("orders"), Bytes.toBytes("orderId"),Bytes.toBytes("1-"+i));
-			p.addColumn(Bytes.toBytes("orders"), Bytes.toBytes("product"),Bytes.toBytes("a-"+i));
+		Put p = new Put(Bytes.toBytes("row-2"));
+		p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("customerId"),Bytes.toBytes("2"));
+		p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("name"),Bytes.toBytes("aahmed-2"));
+		p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("email"),Bytes.toBytes("leo_adnan_2@hotmail.com"));
+		p.addColumn(Bytes.toBytes("customers"), Bytes.toBytes("phone"),Bytes.toBytes("1234567890"));
+		p.addColumn(Bytes.toBytes("orders"), Bytes.toBytes("orderId"),Bytes.toBytes("1"));
+
+		salesTable.put(p);
+
+		for (int i=1; i<=5; i++){
+			p.addColumn(Bytes.toBytes("orders"), Bytes.toBytes("product-"+i),Bytes.toBytes("Product-"+i));
 			puts.add(p);
 		}
 		salesTable.put(puts);
@@ -92,8 +99,8 @@ public class HBaseConnection {
 		
 		//Get by row-id range
 		Scan s = new Scan();
-		s.setStartRow(Bytes.toBytes("row-5"));
-		s.setStopRow(Bytes.toBytes("row-9"));
+		s.setStartRow(Bytes.toBytes("row-1"));
+		s.setStopRow(Bytes.toBytes("row-3"));
 		ResultScanner ss = salesTable.getScanner(s);
 		for (Result r : ss) {
 			kv = r.rawCells();
