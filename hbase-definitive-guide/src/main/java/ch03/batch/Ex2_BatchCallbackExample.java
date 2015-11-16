@@ -21,7 +21,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class BatchCallbackExample {
+public class Ex2_BatchCallbackExample {
 
 	private final static byte[] ROW1 = Bytes.toBytes("row1");
 	private final static byte[] ROW2 = Bytes.toBytes("row2");

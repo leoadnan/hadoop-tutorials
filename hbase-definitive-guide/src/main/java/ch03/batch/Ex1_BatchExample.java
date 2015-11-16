@@ -19,7 +19,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class BatchExample {
+public class Ex1_BatchExample {
 
 	private final static byte[] ROW1 = Bytes.toBytes("row1");
 	private final static byte[] ROW2 = Bytes.toBytes("row2");

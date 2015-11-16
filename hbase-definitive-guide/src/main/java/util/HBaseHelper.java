@@ -327,11 +327,8 @@ public class HBaseHelper implements Closeable {
 		Result[] results = tbl.get(gets);
 		for (Result result : results) {
 			for (Cell cell : result.rawCells()) {
-				System.out.println("Cell: "
-						+ cell
-						+ ", Value: "
-						+ Bytes.toString(cell.getValueArray(),
-								cell.getValueOffset(), cell.getValueLength()));
+				System.out.println("Cell: " + cell + 
+								", Value: " + Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
 			}
 		}
 		tbl.close();
