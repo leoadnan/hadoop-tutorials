@@ -1,5 +1,6 @@
 package ch03.put;
 
+// Example inserting an empty Put instance into HBase
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class PutListExample {
+public class Ex9_PutListErrorExample2 {
 
 	public static void main(String[] args) throws IOException {
 		Configuration conf = HBaseConfiguration.create();
@@ -27,29 +28,37 @@ public class PutListExample {
 		Connection connection = ConnectionFactory.createConnection(conf);
 		Table table = connection.getTable(TableName.valueOf("testtable"));
 
-		// CreateList Create a list that holds the Put instances.
 		List<Put> puts = new ArrayList<Put>();
 
 		Put put1 = new Put(Bytes.toBytes("row1"));
 		put1.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"), Bytes.toBytes("val1"));
-		
-		// AddPut1 Add ch03.put to list.
 		puts.add(put1);
-
-		Put put2 = new Put(Bytes.toBytes("row2"));
-		put2.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"), Bytes.toBytes("val2"));
 		
-		// AddPut2 Add another ch03.put to list.
+		Put put2 = new Put(Bytes.toBytes("row2"));
+		put2.addColumn(Bytes.toBytes("BOGUS"), Bytes.toBytes("qual1"), Bytes.toBytes("val2"));
 		puts.add(put2);
-
+		
 		Put put3 = new Put(Bytes.toBytes("row2"));
 		put3.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual2"), Bytes.toBytes("val3"));
-		
-		// AddPut3 Add third ch03.put to list.
 		puts.add(put3);
+		
+		Put put4 = new Put(Bytes.toBytes("row2"));
+		// 1-Put Add put with no content at all to list.
+		puts.add(put4);
 
-		// Put Store multiple rows with columns into HBase.
-		table.put(puts);
+		Put put5 = new Put(Bytes.toBytes("row6"));
+		put5.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"), Bytes.toBytes("val1"));
+		puts.add(put5);
+
+		Put put6 = new Put(Bytes.toBytes("row7"));
+		put6.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"), Bytes.toBytes("val1"));
+		puts.add(put6);
+
+		try {
+			table.put(puts);
+		} catch (Exception e) {
+			System.err.println("Error: " + e);
+		}
 		table.close();
 		connection.close();
 		helper.close();

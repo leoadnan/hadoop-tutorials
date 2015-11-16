@@ -18,7 +18,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class GetListExample {
+public class Ex8_GetListExample {
 
 	public static void main(String[] args) throws IOException {
 		Configuration conf = HBaseConfiguration.create();

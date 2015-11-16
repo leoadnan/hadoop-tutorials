@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class GetMaxResultsRowOffsetExample1 {
+public class Ex5_GetMaxResultsRowOffsetExample1 {
 
 	public static void main(String[] args) throws IOException {
 		Configuration conf = HBaseConfiguration.create();

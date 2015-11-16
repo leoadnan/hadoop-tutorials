@@ -8,9 +8,8 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.util.Bytes;
 
-public class DeleteColoumn {
+public class Ex3_TableExists {
 
 	public static void main(String[] args) throws IOException {
 
@@ -21,9 +20,9 @@ public class DeleteColoumn {
 		// Get HbaseAdmin class
 		Admin admin = connection.getAdmin();
 
-		// Deleting a column family
-		admin.deleteColumn(TableName.valueOf("employee"), Bytes.toBytes("contactDetails"));
-		System.out.println("coloumn deleted");
+		// Verifying the existance of the table
+		boolean bool = admin.tableExists(TableName.valueOf("emp"));
+		System.out.println(bool);
 	}
 
 }

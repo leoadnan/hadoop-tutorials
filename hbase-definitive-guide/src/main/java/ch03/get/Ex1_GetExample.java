@@ -1,8 +1,6 @@
 package ch03.get;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -16,9 +14,11 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class GetListErrorExample {
+public class Ex1_GetExample {
 
 	public static void main(String[] args) throws IOException {
+
+		//1- Create the configuration.
 		Configuration conf = HBaseConfiguration.create();
 
 		HBaseHelper helper = HBaseHelper.getHelper(conf);
@@ -26,43 +26,29 @@ public class GetListErrorExample {
 			helper.createTable("testtable", "colfam1");
 		}
 
+		//2- Instantiate a new table reference.
 		Connection connection = ConnectionFactory.createConnection(conf);
 		Table table = connection.getTable(TableName.valueOf("testtable"));
 
-		byte[] cf1 = Bytes.toBytes("colfam1");
-		byte[] qf1 = Bytes.toBytes("qual1");
-		byte[] qf2 = Bytes.toBytes("qual2");
-		byte[] row1 = Bytes.toBytes("row1");
-		byte[] row2 = Bytes.toBytes("row2");
+		//3- Create ch03.get with specific row.
+		Get get = new Get(Bytes.toBytes("row1"));
 
-		List<Get> gets = new ArrayList<Get>();
+		//4- Add a column to the ch03.get.
+		 get.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
 
-		Get get1 = new Get(row1);
-		get1.addColumn(cf1, qf1);
-		gets.add(get1);
-
-		// 1-AddGets Add the Get instances to the list.
-		Get get2 = new Get(row2);
-		get2.addColumn(cf1, qf1);
-		gets.add(get2);
-
-		Get get3 = new Get(row2);
-		get3.addColumn(cf1, qf2);
-		gets.add(get3);
-
-		// 2-AddBogus Add the bogus column family ch03.get.
-		Get get4 = new Get(row2);
-		get4.addColumn(Bytes.toBytes("BOGUS"),qf2);
-		gets.add(get4);
+		//5- Retrieve row with selected columns from HBase.
+		Result result = table.get(get);
 		
-		// 3-Error An exception is thrown and the process is aborted.
-		Result[] results = table.get(gets);
-		
-		// 4-SOUT This line will never reached!
-		System.out.println("Result count: " + results.length);
-		
+		//6- Get a specific value for the given column.
+		byte[] val = result.getValue(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
+
+		//7- Print out the value while converting it back.
+		System.out.println("Value: " + Bytes.toString(val));
+
+		//8- Close the table and connection instances to free resources.
 		table.close();
 		connection.close();
+
 		helper.close();
 	}
 }

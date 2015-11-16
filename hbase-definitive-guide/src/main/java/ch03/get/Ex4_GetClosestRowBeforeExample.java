@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.CellScanner;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
@@ -17,7 +18,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class GetCheckExistenceExample {
+public class Ex4_GetClosestRowBeforeExample {
 
 	public static void main(String[] args) throws IOException {
 		Configuration conf = HBaseConfiguration.create();
@@ -39,51 +40,53 @@ public class GetCheckExistenceExample {
 		Put put3 = new Put(Bytes.toBytes("row2"));
 		put3.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual2"), Bytes.toBytes("val3"));
 		puts.add(put3);
-		
-		// Puts Insert two rows into the table.
 		table.put(puts);
 
-		Get get1 = new Get(Bytes.toBytes("row2"));
+		// 1-Get1 Attempt to read a row that does not exist.
+		Get get1 = new Get(Bytes.toBytes("row3"));
 		get1.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
-		get1.setCheckExistenceOnly(true);
-		
-		// Get1 Check first with existing data.
 		Result result1 = table.get(get1);
 
-		byte[] val = result1.getValue(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
+		System.out.println("Get 1 isEmpty: " + result1.isEmpty());
+		CellScanner scanner1 = result1.cellScanner();
+		while (scanner1.advance()) {
+			System.out.println("Get 1 Cell: " + scanner1.current());
+		}
 
-		System.out.println("Get 1 Exists: " + result1.getExists());
-		// Result1 Exists is "true", while no cel was actually returned.
-		System.out.println("Get 1 Size: " + result1.size());
-		System.out.println("Get 1 Value: " + Bytes.toString(val));
-
-		Get get2 = new Get(Bytes.toBytes("row2"));
-		// 4-Get2 Check for an entire family to exist.
-		get2.addFamily(Bytes.toBytes("colfam1"));
-		get2.setCheckExistenceOnly(true);
+		Get get2 = new Get(Bytes.toBytes("row3"));
+		get2.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
+		// 2-Get2 Instruct the get() call to fall back to the previous row, if necessary.
+		get2.setClosestRowBefore(true);
 		Result result2 = table.get(get2);
 
-		System.out.println("Get 2 Exists: " + result2.getExists());
-		System.out.println("Get 2 Size: " + result2.size());
+		System.out.println("Get 2 isEmpty: " + result2.isEmpty());
+		CellScanner scanner2 = result2.cellScanner();
+		while (scanner2.advance()) {
+			System.out.println("Get 2 Cell: " + scanner2.current());
+		}
 
+		// 3-Get3 Attempt to read a row that exists.
 		Get get3 = new Get(Bytes.toBytes("row2"));
-		// Get3 Check for a non-existent column.
-		get3.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual9999"));
-		get3.setCheckExistenceOnly(true);
+		get3.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
+		get3.setClosestRowBefore(true);
 		Result result3 = table.get(get3);
 
-		System.out.println("Get 3 Exists: " + result3.getExists());
-		System.out.println("Get 3 Size: " + result3.size());
+		System.out.println("Get 3 isEmpty: " + result3.isEmpty());
+		CellScanner scanner3 = result3.cellScanner();
+		while (scanner3.advance()) {
+			System.out.println("Get 3 Cell: " + scanner3.current());
+		}
 
+		// 4-Get4 Read exactly a row that exists.
 		Get get4 = new Get(Bytes.toBytes("row2"));
-		// Get4 Check for an existent, and non-existent column.
-		get4.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual9999"));
 		get4.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
-		get4.setCheckExistenceOnly(true);
 		Result result4 = table.get(get4);
-		// Result4 Exists is "true" because some data exists.
-		System.out.println("Get 4 Exists: " + result4.getExists());
-		System.out.println("Get 4 Size: " + result4.size());
+
+		System.out.println("Get 4 isEmpty: " + result4.isEmpty());
+		CellScanner scanner4 = result4.cellScanner();
+		while (scanner4.advance()) {
+			System.out.println("Get 4 Cell: " + scanner4.current());
+		}
 
 		table.close();
 		connection.close();

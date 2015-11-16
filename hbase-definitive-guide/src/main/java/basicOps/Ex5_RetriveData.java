@@ -13,7 +13,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class RetriveData {
+public class Ex5_RetriveData {
 	public static void main(String[] args) throws IOException, Exception {
 
 		// Instantiating configuration class

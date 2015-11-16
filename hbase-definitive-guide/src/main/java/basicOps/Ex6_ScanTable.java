@@ -14,7 +14,7 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class ScanTable {
+public class Ex6_ScanTable {
 
 	public static void main(String args[]) throws IOException {
 
