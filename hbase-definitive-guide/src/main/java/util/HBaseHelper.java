@@ -188,8 +188,8 @@ public class HBaseHelper implements Closeable {
 		Random rnd = new Random();
 		for (int row = startRow; row <= endRow; row++) {
 			for (int col = 1; col <= numCols; col++) {
-//				Put put = new Put(Bytes.toBytes("row-" + padNum(row, pad)));
-				Put put = new Put(Bytes.toBytes("" + padNum(row, pad)));
+				Put put = new Put(Bytes.toBytes("row-" + padNum(row, pad)));
+//				Put put = new Put(Bytes.toBytes("" + padNum(row, pad)));
 				for (String cf : colfams) {
 					String colName = "col-" + padNum(col, pad);
 					String val = "val-" + (random ? Integer.toString(rnd.nextInt(numCols)) : padNum(row, pad) + "." + padNum(col, pad));

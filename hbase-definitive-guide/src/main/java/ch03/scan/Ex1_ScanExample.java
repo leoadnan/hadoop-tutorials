@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import util.HBaseHelper;
 
-public class ScanExample {
+public class Ex1_ScanExample {
 
 	public static void main(String[] args) throws IOException {
 		Configuration conf = HBaseConfiguration.create();
@@ -27,8 +27,9 @@ public class ScanExample {
 		System.out.println("Adding rows to table...");
 		// Tip: Remove comment below to enable padding, adjust start and stop
 		// row, as well as columns below to match. See scan #5 comments.
-		helper.fillTable("testtable", 1, 100, 10,  3, false, "colfam1", "colfam2");
-
+		helper.fillTable("testtable", 1, 100, 100, 3, false, "colfam1", "colfam2");
+//		helper.fillTable("testtable", 1, 100, 100, /*3, false,*/ "colfam1", "colfam2");
+		
 		Connection connection = ConnectionFactory.createConnection(conf);
 		Table table = connection.getTable(TableName.valueOf("testtable"));
 
@@ -69,6 +70,7 @@ public class ScanExample {
 
 		System.out.println("Scanning table #4...");
 		Scan scan4 = new Scan();
+		scan4.setCaching(1);
 		// 7-Build Only select one column.
 		scan4.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("col-005"))
 				.setStartRow(Bytes.toBytes("row-010"))

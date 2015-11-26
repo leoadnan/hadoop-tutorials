@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.client.Table;
 
 import util.HBaseHelper;
 
-public class ScanTimeoutExample {
+public class Ex2_ScanTimeoutExample {
 
 	public static void main(String[] args) throws IOException {
 		Configuration conf = HBaseConfiguration.create();
@@ -33,12 +33,12 @@ public class ScanTimeoutExample {
 		Scan scan = new Scan();
 		ResultScanner scanner = table.getScanner(scan);
 
-		// 1-GetConf Get currently configured lease timeout.
+		// 1- Get currently configured lease timeout.
 		int scannerTimeout = (int) conf.getLong(HConstants.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD, -1);
 		System.out.println("Current (local) lease period: " + scannerTimeout + "ms");
 		System.out.println("Sleeping now for " + (scannerTimeout + 5000) + "ms...");
 		try {
-			// 2-Sleep Sleep a little longer than the lease allows.
+			// 2- Sleep a little longer than the lease allows.
 			Thread.sleep(scannerTimeout + 5000);
 		} catch (InterruptedException e) {
 			// ignore

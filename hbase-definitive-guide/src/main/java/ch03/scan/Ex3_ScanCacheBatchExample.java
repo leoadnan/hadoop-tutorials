@@ -16,7 +16,7 @@ import org.apache.hadoop.hbase.client.metrics.ScanMetrics;
 
 import util.HBaseHelper;
 
-public class ScanCacheBatchExample {
+public class Ex3_ScanCacheBatchExample {
 
 	private static Table table = null;
 
@@ -24,25 +24,25 @@ public class ScanCacheBatchExample {
 			throws IOException {
 		int count = 0;
 		Scan scan = new Scan()
-				.setCaching(caching) // 1- Set caching and batch parameters.
-				.setBatch(batch)
-				.setSmall(small)
-				.setScanMetricsEnabled(true);
+			.setCaching(caching) //1-Set Set caching and batch parameters.
+			.setBatch(batch)
+			.setSmall(small)
+			.setScanMetricsEnabled(true);
 		ResultScanner scanner = table.getScanner(scan);
 		for (Result result : scanner) {
 			count++; // 2- Count the number of Results available.
-//			System.out.println(result);
 		}
 		scanner.close();
 		ScanMetrics metrics = scan.getScanMetrics();
-		System.out.println("Caching: " + caching 
-				+ ", Batch: " + batch
-				+ ", Small: " + small 
-				+ ", Results: " + count 
-				+ ", RPCs: " + metrics.countOfRPCcalls);
+		System.out.println("Caching: " + caching + 
+						", Batch: " + batch + 
+						", Small: " + small + 
+						", Results: " + count + 
+						", RPCs: " + metrics.countOfRPCcalls);
 	}
 
 	public static void main(String[] args) throws IOException {
+		// ^^ Ex3_ScanCacheBatchExample
 		Configuration conf = HBaseConfiguration.create();
 
 		HBaseHelper helper = HBaseHelper.getHelper(conf);
@@ -53,20 +53,18 @@ public class ScanCacheBatchExample {
 		Connection connection = ConnectionFactory.createConnection(conf);
 		table = connection.getTable(TableName.valueOf("testtable"));
 
-		/* ... */
 		scan(1, 1, false);
 		scan(1, 0, false);
 		scan(1, 0, true);
 		scan(200, 1, false);
 		scan(200, 0, false);
 		scan(200, 0, true);
-		scan(2000, 100, false); // 3- Test various combinations.
+		scan(2000, 100, false); //3-Test Test various combinations.
 		scan(2, 100, false);
 		scan(2, 10, false);
 		scan(5, 100, false);
 		scan(5, 20, false);
 		scan(10, 10, false);
-		/* ... */
 		
 		table.close();
 		connection.close();

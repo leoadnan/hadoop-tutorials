@@ -16,17 +16,21 @@ import org.apache.hadoop.hbase.client.Table;
 
 import util.HBaseHelper;
 
-public class ScanSlicingExample {
+public class Ex4_ScanSlicingExample {
 
 	private static Table table = null;
 
 	private static void scan(int num, int caching, int batch, int offset,
 			int maxResults, int maxResultSize, boolean dump) throws IOException {
 		int count = 0;
-		Scan scan = new Scan().setCaching(caching).setBatch(batch)
-				.setRowOffsetPerColumnFamily(offset)
-				.setMaxResultsPerColumnFamily(maxResults)
-				.setMaxResultSize(maxResultSize).setScanMetricsEnabled(true);
+		Scan scan = new Scan()
+			.setCaching(caching)
+			.setBatch(batch)
+			.setRowOffsetPerColumnFamily(offset)
+			.setMaxResultsPerColumnFamily(maxResults)
+			.setMaxResultSize(maxResultSize)
+			.setScanMetricsEnabled(true);
+		
 		ResultScanner scanner = table.getScanner(scan);
 		System.out.println("Scan #" + num + " running...");
 		for (Result result : scanner) {
@@ -57,12 +61,13 @@ public class ScanSlicingExample {
 		table = connection.getTable(TableName.valueOf("testtable"));
 
 		/* ... */
+//		(int num, int caching, int batch, int offset, int maxResults, int maxResultSize, boolean dump) 
 		scan(1, 11, 0, 0, 2, -1, true);
-//		scan(2, 11, 0, 4, 2, -1, true);
-//		scan(3, 5, 0, 0, 2, -1, false);
-//		scan(4, 11, 2, 0, 5, -1, true);
-//		scan(5, 11, -1, -1, -1, 1, false);
-//		scan(6, 11, -1, -1, -1, 10000, false);
+		scan(2, 11, 0, 4, 2, -1, true);
+		scan(3, 5, 0, 0, 2, -1, false);
+		scan(4, 11, 2, 0, 5, -1, true);
+		scan(5, 11, -1, -1, -1, 1, false);
+		scan(6, 11, -1, -1, -1, 10000, false);
 		/* ... */
 		table.close();
 		connection.close();
