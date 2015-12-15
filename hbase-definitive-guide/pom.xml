@@ -20,6 +20,27 @@
              <artifactId>hbase-client</artifactId>
              <version>${hbase.version}</version>
         </dependency>
+        <dependency>
+             <groupId>org.apache.hbase</groupId>
+             <artifactId>hbase-server</artifactId>
+             <version>${hbase.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+        
     </dependencies>
 
 	<build>
@@ -33,14 +54,75 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
 					<outputDirectory>${basedir}</outputDirectory>
 				</configuration>
+			</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<tarLongFileMode>gnu</tarLongFileMode>
+					<descriptors>
+						<descriptor>src/main/assembly/job.xml</descriptor>
+					</descriptors>
+					<finalName>hdp-definitive-guide</finalName>
+					<outputDirectory>${basedir}</outputDirectory>
+					<!--descriptorRefs> 
+						<descriptorRef>jar-with-dependencies</descriptorRef> 
+						</descriptorRefs -->
+					<!-- <archive>
+						<index>true</index>
+						<manifest>
+							<mainClass>mapreduce/Driver</mainClass>
+						</manifest>
+					</archive> -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>fat-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+			<!-- 
+			<plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.geekcap.informit.mapreduce.MapReduceExample</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>install</phase>
+                        <goals>
+                             <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                           <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> -->
 		</plugins>
 	</build>	
 </project>
